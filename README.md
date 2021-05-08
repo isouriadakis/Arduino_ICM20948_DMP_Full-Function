@@ -11,10 +11,15 @@ This repository contains a modified version of the ICM20948 library with extra f
 * Provides Linear Accel, Gravity Vector, 6&9DoF Quaternion and Euler, Activity Recognition and Step Counter
 * The sensor is implemented as an Object by using the ArduinoICM20948 class (Check example)
 
-## Settings
+## Setup
 
+Initialize the icm20948 Object
 ```
 ArduinoICM20948 icm20948;
+```
+
+Initialize the icm20948 Settings
+```
 ArduinoICM20948Settings icmSettings =
 {
   .i2c_speed = 400000,                // i2c clock speed
@@ -39,13 +44,48 @@ ArduinoICM20948Settings icmSettings =
   .quaternion6_frequency = 50,        // Max frequency = 225, min frequency = 50
   .quaternion9_frequency = 50,        // Max frequency = 225, min frequency = 50
   .har_frequency = 50,                // Max frequency = 225, min frequency = 50
-  .steps_frequency = 50               // Max frequency = 225, min frequency = 50
-  
+  .steps_frequency = 50               // Max frequency = 225, min frequency = 50  
 };
+```
 
+Load the Settings to the icm20948 at setup
+```
 icm20948.init(icmSettings);
+```
+
+Call task to poll the sensor data for all enabled outputs - do this each time you require new data
+```
 icm20948.task();
 ```
-Feel free give feedback and suggest changes.
+
+Read desired output
+```
+icm20948.readGyroData(float *x, float *y, float *z)
+
+icm20948.readAccelData(float *x, float *y, float *z)
+
+icm20948.readMagData(float *x, float *y, float *z)
+
+icm20948.readLinearAccelData(float* x, float* y, float* z)
+
+icm20948.readGravData(float* x, float* y, float* z)
+
+icm20948.readQuat6Data(float *w, float *x, float *y, float *z)
+
+icm20948.readEuler6Data(float *roll, float *pitch, float *yaw)
+
+icm20948.readQuat9Data(float* w, float* x, float* y, float* z)
+
+icm20948.readEuler9Data(float* roll, float* pitch, float* yaw)
+
+//pass char and returns with n = Nothing, d = Drive, w = Walk, r = Run, b = Bike, t = Tilt, s = Still
+icm20948.readHarData(char* activity)
+
+icm20948.readStepsData(unsigned long* step_count)
+```
+
+## Contact
 
 Contact at jsouriadakis@outlook.com
+
+Feel free give feedback and suggest changes.
