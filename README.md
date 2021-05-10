@@ -2,6 +2,8 @@ Arduino ICM20948 DMP library
 ======================
 This repository contains a modified version of the ICM20948 library with extra functionality that InvenSense did not complete. It also includes an example project for running the ICM-20948 with Arduino or other Arduino compatible microcontrollers.
 
+Thanks to the contributor of the original library https://github.com/ZaneL/Teensy-ICM-20948
+
 ## Functionality
 
 * Communication over SPI and i2c
