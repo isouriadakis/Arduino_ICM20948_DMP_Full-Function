@@ -60,7 +60,7 @@ bool steps_data_ready = false;
 int spi_master_read_register(uint8_t reg, uint8_t* rbuffer, uint32_t rlen)
 {
     //return spi_master_transfer_rx(NULL, reg, rbuffer, rlen);
-  
+
     SPI.beginTransaction(SPISettings(com_speed, MSBFIRST, SPI_MODE0));
     SPI.transfer(0x00);
     SPI.endTransaction();
@@ -195,7 +195,7 @@ static const uint8_t dmp3_image[] = {
   Invensense Functions
 *************************************************************************/
 
-void check_rc(int rc, const char * msg_context) 
+void check_rc(int rc, const char * msg_context)
 {
   if (rc < 0) {
     Serial.println("ICM20948 ERROR!");
@@ -203,24 +203,24 @@ void check_rc(int rc, const char * msg_context)
   }
 }
 
-int load_dmp3(void) 
+int load_dmp3(void)
 {
   int rc = 0;
   rc = inv_icm20948_load(&icm_device, dmp3_image, sizeof(dmp3_image));
   return rc;
 }
 
-void inv_icm20948_sleep_us(int us) 
+void inv_icm20948_sleep_us(int us)
 {
   delayMicroseconds(us);
 }
 
-void inv_icm20948_sleep(int ms) 
+void inv_icm20948_sleep(int ms)
 {
   delay(ms);
 }
 
-uint64_t inv_icm20948_get_time_us(void) 
+uint64_t inv_icm20948_get_time_us(void)
 {
   return micros();
 }
@@ -285,7 +285,7 @@ int idd_io_hal_write_reg(void *context, uint8_t reg, const uint8_t *wbuffer, uin
     return i2c_master_write_register(I2C_Address, reg, wlen, wbuffer);
 }
 
-static void icm20948_apply_mounting_matrix(void) 
+static void icm20948_apply_mounting_matrix(void)
 {
   int ii;
 
@@ -294,7 +294,7 @@ static void icm20948_apply_mounting_matrix(void)
   }
 }
 
-static void icm20948_set_fsr(void) 
+static void icm20948_set_fsr(void)
 {
   inv_icm20948_set_fsr(&icm_device, INV_ICM20948_SENSOR_RAW_ACCELEROMETER, (const void *)&cfg_acc_fsr);
   inv_icm20948_set_fsr(&icm_device, INV_ICM20948_SENSOR_ACCELEROMETER, (const void *)&cfg_acc_fsr);
@@ -357,7 +357,7 @@ int icm20948_sensor_setup(void)
   return 0;
 }
 
-static uint8_t icm20948_get_grv_accuracy(void) 
+static uint8_t icm20948_get_grv_accuracy(void)
 {
   uint8_t accel_accuracy;
   uint8_t gyro_accuracy;
@@ -390,7 +390,7 @@ static uint8_t convert_to_generic_ids[INV_ICM20948_SENSOR_MAX] = {
   INV_SENSOR_TYPE_B2S
 };
 
-void build_sensor_event_data(void * context, enum inv_icm20948_sensor sensortype, uint64_t timestamp, const void * data, const void *arg) 
+void build_sensor_event_data(void * context, enum inv_icm20948_sensor sensortype, uint64_t timestamp, const void * data, const void *arg)
 {
   float raw_bias_data[6];
   inv_sensor_event_t event;
@@ -400,7 +400,7 @@ void build_sensor_event_data(void * context, enum inv_icm20948_sensor sensortype
   memset((void *)&event, 0, sizeof(event));
   event.sensor = sensor_id;
   event.timestamp = timestamp;
-  switch (sensor_id) 
+  switch (sensor_id)
   {
     case INV_SENSOR_TYPE_UNCAL_GYROSCOPE:
       memcpy(raw_bias_data, data, sizeof(raw_bias_data));
@@ -482,7 +482,7 @@ void build_sensor_event_data(void * context, enum inv_icm20948_sensor sensortype
     case INV_SENSOR_TYPE_GAME_ROTATION_VECTOR:
       memcpy(event.data.quaternion6DOF.quat, data, sizeof(event.data.quaternion6DOF.quat));
       event.data.quaternion6DOF.accuracy_flag = icm20948_get_grv_accuracy();
-      
+
       // WE WANT THIS
       quat6[0] = event.data.quaternion6DOF.quat[0];
       quat6[1] = event.data.quaternion6DOF.quat[1];
@@ -510,7 +510,7 @@ void build_sensor_event_data(void * context, enum inv_icm20948_sensor sensortype
       break;
     case INV_SENSOR_TYPE_STEP_COUNTER:
       memcpy(&(event.data.step.count), data, sizeof(event.data.step.count));
-      
+
       steps = event.data.step.count;
       steps_data_ready = true;
       break;
@@ -630,7 +630,7 @@ void ArduinoICM20948::init(ArduinoICM20948Settings settings)
   rc = inv_icm20948_set_sensor_period(&icm_device, idd_sensortype_conversion(INV_SENSOR_TYPE_LINEAR_ACCELERATION), 1000 / settings.linearAcceleration_frequency);
   rc = inv_icm20948_set_sensor_period(&icm_device, idd_sensortype_conversion(INV_SENSOR_TYPE_BAC), 1000 / settings.har_frequency);
   rc = inv_icm20948_set_sensor_period(&icm_device, idd_sensortype_conversion(INV_SENSOR_TYPE_STEP_COUNTER), 1000 / settings.steps_frequency);
-  
+
 
 
   // Enable / disable
@@ -784,7 +784,7 @@ void ArduinoICM20948::readEuler9Data(float* roll, float* pitch, float* yaw)
 
 void ArduinoICM20948::readHarData(char* activity)
 {
-    
+
     char temp = 'n';
     switch (har)
     {
