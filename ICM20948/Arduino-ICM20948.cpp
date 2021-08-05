@@ -742,8 +742,8 @@ void ArduinoICM20948::readLinearAccelData(float* x, float* y, float* z)
 
 void ArduinoICM20948::readGravData(float* x, float* y, float* z)
 {
-    *y = grav[0];
-    *x = grav[1];
+    *x = grav[0];
+    *y = grav[1];
     *z = grav[2];
     grav_data_ready = false;
 }
