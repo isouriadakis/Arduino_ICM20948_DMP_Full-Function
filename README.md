@@ -90,4 +90,4 @@ icm20948.readStepsData(unsigned long* step_count)
 
 Contact at jsouriadakis@outlook.com
 
-Feel free give feedback and suggest changes.
+Feel free to give feedback and suggest changes.
